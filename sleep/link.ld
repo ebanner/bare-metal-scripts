@@ -19,6 +19,13 @@ SECTIONS {
     boot*(.bss*) boot*(COMMON)
   }
 
+  /* Pad to 510 bytes and add boot signature */
+  . = 0x7C00 + 510;
+  
+  .bootsig : {
+    SHORT(0xAA55)
+  }
+
   .text : {
     init*(.text*)
   }
@@ -30,13 +37,6 @@ SECTIONS {
   }
   .bss : {
     init*(.bss*) init*(COMMON)
-  }
-
-  /* Pad to 510 bytes and add boot signature */
-  . = 0x7C00 + 510;
-  
-  .bootsig : {
-    SHORT(0xAA55)
   }
 
 }

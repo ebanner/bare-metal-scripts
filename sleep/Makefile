@@ -2,7 +2,7 @@ debug: os.img
 	qemu-system-i386 -S -s -monitor stdio -vga std -display cocoa,zoom-to-fit=on os.img
 
 run: os.img
-	qemu-system-i386 -s -monitor stdio os.img
+	qemu-system-i386 -s -monitor stdio -vga std -display cocoa,zoom-to-fit=on os.img
 
 run: os.img
 	qemu-system-i386 -monitor stdio os.img
