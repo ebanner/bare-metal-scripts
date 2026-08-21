@@ -28,9 +28,15 @@ void putchar(const char c) {
   CURSOR += 1;
 }
 
-int sleep() {
-    unsigned int sec = 10;
-    unsigned int divisor = 1193182 * sec; // crude, only works for coarse values
+typedef unsigned int useconds_t;
+
+int __usleep(useconds_t usec) {
+    /*
+     *
+     * usec <= 1,000,000
+     * 
+    */
+    unsigned long long divisor = (1193182 * (usec / 1000)) / 1000; // crude, only works for coarse values
 
     while (divisor > 0) {
         /*
@@ -58,4 +64,15 @@ int sleep() {
 
         divisor -= chunk;
     }
+}
+
+int usleep() {
+    useconds_t usec = 1000000;
+    
+    while (usec > 1000000) {
+        __usleep(1000000);
+        usec -= 1000000;
+    }
+
+    __usleep(usec);
 }

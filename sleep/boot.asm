@@ -1,7 +1,7 @@
 ; External function declarations
 
 global _start, isr_handler
-extern write_idt, sleep
+extern write_idt, usleep
 
 [bits 16]
 _start:
@@ -51,7 +51,7 @@ protected_mode_entry:
     sti
 
 init:
-    call sleep
+    call usleep
 
     jmp $
 
