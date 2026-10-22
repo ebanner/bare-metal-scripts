@@ -16,17 +16,41 @@ unsigned int kbd_poll() {
     return key;
 }
 
+char* itoa(int value, char *buf) {
+    char *p = buf;
+    unsigned int u = (unsigned int)value;
+
+    if (value < 0)
+        u = -u;
+
+    do {
+        *p++ = '0' + (u % 10);
+        u /= 10;
+    } while (u != 0);
+
+    if (value < 0)
+        *p++ = '-';
+
+    *p = '\0';
+
+    // reverse in place
+    for (char *a = buf, *b = p - 1; a < b; a++, b--) {
+        char t = *a; *a = *b; *b = t;
+    }
+
+    return buf;
+}
+
 void init(void) {
-    char key[2];
+    char buf[12];
 
     for (;;) {
-        unsigned char result = kbd_poll();
+        unsigned int result = kbd_poll();
         if (result == 0)
             continue;
 
-        key[0] = result;
-
-        dbg_puts(key);
+        itoa(result, buf);
+        dbg_puts(buf);
         dbg_puts("\n");
 
         usleep(10000);
