@@ -49,9 +49,10 @@ void init(void) {
         if (result == 0)
             continue;
 
-        itoa(result, buf);
-        dbg_puts(buf);
-        dbg_puts("\n");
+        if (result != 0x39)
+            continue;
+
+        dbg_puts("Space!\n");
 
         usleep(10000);
     }
